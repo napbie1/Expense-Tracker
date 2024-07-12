@@ -1,6 +1,7 @@
 const gql = String.raw;
 
 const transactionTypeDef = gql`
+  #graphql
   type Transaction {
     _id: ID!
     userId: ID!
@@ -10,11 +11,13 @@ const transactionTypeDef = gql`
     amount: Float!
     location: String
     date: String!
+    user: User!
   }
 
   type Query {
     transactions: [Transaction!]
     transaction(transactionId: ID!): Transaction
+    categoryStatistics: [CategoryStatistics!]
   }
 
   type Mutation {
@@ -23,13 +26,18 @@ const transactionTypeDef = gql`
     deleteTransaction(transactionId: ID!): Transaction!
   }
 
+  type CategoryStatistics {
+    category: String!
+    totalAmount: Float!
+  }
+
   input CreateTransactionInput {
     description: String!
     paymentType: String!
     category: String!
     amount: Float!
-    location: String
     date: String!
+    location: String
   }
 
   input UpdateTransactionInput {

@@ -1,6 +1,7 @@
-const gql = String.raw; //syntax highlighting
+const gql = String.raw;
 
 const userTypeDef = gql`
+  #graphql
   type User {
     _id: ID!
     username: String!
@@ -8,6 +9,7 @@ const userTypeDef = gql`
     password: String!
     profilePicture: String
     gender: String!
+    transactions: [Transaction!]
   }
 
   type Query {
