@@ -5,6 +5,7 @@ import { GET_TRANSACTION } from "../graphql/queries/transaction.query";
 import { UPDATE_TRANSACTION } from "../graphql/mutations/transaction.mutation";
 import toast from "react-hot-toast";
 import TransactionFormSkeleton from "../components/skeletons/TransactionFormSkeleton";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 const TransactionPage = () => {
   const { id } = useParams();
@@ -13,7 +14,10 @@ const TransactionPage = () => {
   });
 
   const [updateTransaction, { loading: loadingUpdate }] = useMutation(
-    UPDATE_TRANSACTION
+    UPDATE_TRANSACTION,
+    {
+      refetchQueries: ["GetTransactions", "GetTransactionStatistics"],
+    }
     // https://github.com/apollographql/apollo-client/issues/5419 => refetchQueries is not working, and here is how we fixed it
   );
 
@@ -44,7 +48,9 @@ const TransactionPage = () => {
     } catch (error) {
       toast.error(error.message);
     }
+    <Navigate to="/" />;
   };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevFormData) => ({
